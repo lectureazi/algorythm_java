@@ -10,10 +10,10 @@ import c_datastructure.dto.School;
 public class Run {
 
 	public static void main(String[] args) {
-		//.testAdd();
-//		testGet();
-//		testSet();
-//		testRemove();
+		//testAdd();
+		//testGet();
+		//testSet();
+		//testRemove();
 		//testSchool();
 		testIterable();
 	}
@@ -75,6 +75,10 @@ public class Run {
 		
 		for (int i = 0; i < 10; i++) {
 			list.add(i);
+		}
+
+		for (Integer i : list) {
+			System.out.println(i);
 		}
 	}
 	

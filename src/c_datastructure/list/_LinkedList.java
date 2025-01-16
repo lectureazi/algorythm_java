@@ -2,7 +2,9 @@ package c_datastructure.list;
 
 import c_datastructure.Node;
 
-public class _LinkedList<E> {
+import java.util.Iterator;
+
+public class _LinkedList<E> implements Iterable<E> {
 	
 	private Node<E> head;
 	private int size;
@@ -99,9 +101,26 @@ public class _LinkedList<E> {
 		sb.append(" ]");
 		return sb.toString();
 	}
-	
-	
-	
-	
 
+	// 010 - 3329 - 3364
+	// 하명도
+	@Override
+	public Iterator<E> iterator() {
+		//익명클래스
+		return new Iterator<E>() {
+			private int pointer;
+
+			@Override
+			public boolean hasNext() {
+				return pointer < size();
+			}
+
+			@Override
+			public E next() {
+				E e = get(pointer);
+				pointer++;
+				return e;
+			}
+		};
+	}
 }
