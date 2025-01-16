@@ -76,10 +76,6 @@ public class Run {
 		for (int i = 0; i < 10; i++) {
 			list.add(i);
 		}
-		
-		// 자바 for-each가 우리가 만든 Iterator를 사용해 반복하는 방식
-		// 1. Iterable 인스턴스의 iterator 메서드를 호출해서 Iterator 객체를 반환 받음
-		Iterator<Integer> it = list.iterator();
 	}
 	
 	static void testSchool() {
