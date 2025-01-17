@@ -1,9 +1,11 @@
 package c_datastructure.set;
 
 import c_datastructure.Node;
+import c_datastructure.list._LinkedList;
 
 import java.util.Iterator;
 
+@SuppressWarnings("unchecked")
 public class _HashSet_P3<E> implements Iterable<E>{
 
     private int arraySize = 17;
@@ -40,72 +42,61 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
         for(int i = 0; i < table.length; i++){
             if(table[i] == null) continue;
-            int index = hash((E)table[i]);
-            temp[index] = table[i];
+            _LinkedList<E> row = (_LinkedList<E>) table[i];
+            int index = hash(row.get(0));
+            temp[index] = row;
         }
 
         table = temp;
     }
 
-    public boolean add(E data){
+    public boolean add(E data) {
 
-        Node<E> node = new Node<E>(data);
-
-        if(size == arraySize - 1) {
+        if (size == arraySize - 1) {
             resize();
         }
 
         int index = hash(data);
-        Node<E> head = (Node<E>) table[index];
+        _LinkedList<E> row = (_LinkedList<E>) table[index];
 
-        if(head == null){
-            table[index] = node;
+        if (row == null) {
+            createNewRow(data, index);
             size++;
             return true;
         }
 
-        Node<E> link = head;
-        Node<E> prev = head;
-
-        while(link != null){
-            if(link.data().equals(data)){
-                return false;
-            }
-            prev = link;
-            link = link.next();
-        }
-
-        prev.next(node);
+        if (row.contains(data)) return false;
+        row.add(data);
         size++;
         return true;
+
+    }
+
+    private void createNewRow(E data, int index) {
+        _LinkedList<E> newRow = new _LinkedList<>();
+        newRow.add(data);
+        table[index] = newRow;
     }
 
     public boolean remove(E data){
         int index = hash(data);
-        Node<E> head = (Node<E>) table[index];
+        _LinkedList<E> row = (_LinkedList<E>) table[index];
 
-        if(head == null){
+        if(row == null){
             return false;
         }
 
-        Node<E> link = head;
-        Node<E> prev = head;
-
-        if(head.data().equals(data)){
-            table[index] = head.next();
-            size--;
-            return true;
-        }
-
-        while(link != null){
-            if(link.data().equals(data)){
-                prev.next(link.next());
+        for (int i = 0; i < row.size(); i++) {
+            if(row.get(i).equals(data)){
+                row.remove(i);
                 size--;
+
+                if(row.isEmpty()){
+                    table[index] = null;
+                }
+
                 return true;
             }
-
-            prev = link;
-            link = link.next();
         }
 
         return false;
@@ -118,12 +109,9 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
         for(int i = 0; i < table.length; i++){
             if(table[i] == null) continue;
-            Node<E> link = (Node<E>) table[i];
-
-            while(link != null){
-                sb.append(link.data());
-                sb.append(", ");
-                link = link.next();
+            _LinkedList<E> row = (_LinkedList<E>) table[i];
+            for (E e : row) {
+                sb.append(e).append(", ");
             }
         }
 
@@ -138,7 +126,8 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
             private int cnt;
             private int pointer = -1;
-            private Node<E> prev = new Node<E>(null);
+            private _LinkedList<E> row = new _LinkedList<>();
+            private Iterator<E> rowIterator = row.iterator();
 
             @Override
             public boolean hasNext() {
@@ -147,20 +136,19 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
             @Override
             public E next() {
-                if(prev.next() != null){
-                    prev = prev.next();
+                if(rowIterator.hasNext()){
                     cnt++;
-                    return prev.data();
+                    return rowIterator.next();
                 }
 
-                // prev.next() == null => 해당 row에 저장된 마지막 node
                 do {
                     pointer++;
                 } while (table[pointer] == null);
 
-                prev = (Node<E>) table[pointer];
+                row = (_LinkedList<E>) table[pointer];
+                rowIterator = row.iterator();
                 cnt++;
-                return prev.data();
+                return rowIterator.next();
             }
         };
     }

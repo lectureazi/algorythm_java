@@ -19,7 +19,7 @@ public class Run {
         School multicampus = new School("멀티캠퍼스", "삼성", 2);
         School semyeong = new School("세명초", "머리", 1);
 
-        _HashSet_P2<School> set = new _HashSet_P2<>();
+        _HashSet_P3<School> set = new _HashSet_P3<>();
         set.add(seoulUniv);
         set.add(yunsae);
         set.add(minsa);

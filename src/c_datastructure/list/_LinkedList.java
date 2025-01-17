@@ -85,6 +85,18 @@ public class _LinkedList<E> implements Iterable<E> {
 		size--;
 		return prev;
 	}
+
+	public boolean contains(E e){
+		Node<E> link = head;
+		while(link != null) {
+			if(link.data().equals(e)) {
+				return true;
+			}
+			link = link.next();
+		}
+
+		return false;
+	}
 	
 	//toString
 	@Override

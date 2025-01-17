@@ -66,19 +66,6 @@ public class _HashSet_P2<E> implements Iterable<E>{
             return true;
         }
 
-        // head가 null이 아니라면 node 체인을 탐색
-        // 만약 중복된 요소라면 요소를 추가하지 않고 false 반환
-
-        // 같다 ==, equals()
-        // == : stack 영역의 값으로 비교
-        // equals : 객체에서 같음을 정의한 내용에 따라 비교
-        // == (동일비교): 완전히 같음, 객체라면 동일한 객체 (주소가 같음)
-        // equals (동등비교): 같다고 정의한 내용(equals())에 따라 같음
-
-        // String ==, equals()
-        // 객체는 new 연산자를 사용해 생성.
-        // 극히 일부, 아주 많이 사용되는 클래스는 생성자가 아니라 literal로 생성할 수 있다.
-        // String a = new String(10);
         Node<E> link = head;
         Node<E> prev = head;
 
