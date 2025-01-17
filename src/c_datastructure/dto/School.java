@@ -1,16 +1,18 @@
 package c_datastructure.dto;
 
+import java.util.Objects;
+
 public class School implements Comparable<School> {
 	
 	private String name;
 	private String address;
-	private int levle;
+	private int level;
 	
 	public School(String name, String address, int levle) {
 		super();
 		this.name = name;
 		this.address = address;
-		this.levle = levle;
+		this.level = levle;
 	}
 	
 	public String getName() {
@@ -29,27 +31,38 @@ public class School implements Comparable<School> {
 		this.address = address;
 	}
 	
-	public int getLevle() {
-		return levle;
+	public int getLevel() {
+		return level;
 	}
 	
-	public void setLevle(int levle) {
-		this.levle = levle;
+	public void setLevel(int level) {
+		this.level = level;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof School school)) return false;
+        return level == school.level && Objects.equals(name, school.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, level);
+	}
+
 	@Override
 	public String toString() {
-		return "School [name=" + name + ", address=" + address + ", levle=" + levle + "]";
+		return "School [name=" + name + ", address=" + address + ", levle=" + level + "]";
 	}
 
 	@Override
 	public int compareTo(School o) {
 		//* level 기준으로 오름차순 정렬하되, 만약 level이 같다면 대학교 이름으로 내림차순정렬
-		if(this.levle == o.levle) {
+		if(this.level == o.level) {
 			return this.name.compareTo(o.name) * -1;
 		}
 		
-		return this.levle - o.levle;
+		return this.level - o.level;
 	}
 
 
