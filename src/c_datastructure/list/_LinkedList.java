@@ -97,6 +97,16 @@ public class _LinkedList<E> implements Iterable<E> {
 
 		return false;
 	}
+
+	public int indexOf(E e){
+		Node<E> link = head;
+		for(int i = 0; i < size; i++) {
+			if(link.data().equals(e)) return i;
+			link = link.next();
+		}
+
+		return -1;
+	}
 	
 	//toString
 	@Override
