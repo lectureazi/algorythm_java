@@ -1,7 +1,8 @@
 package c_datastructure.set;
 
+import c_datastructure.list._LinkedList;
+
 import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("unchecked")
 public class _HashSet_P3<E> implements Iterable<E>{
@@ -40,7 +41,7 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
         for(int i = 0; i < table.length; i++){
             if(table[i] == null) continue;
-            CopyOnWriteArrayList<E> row = (CopyOnWriteArrayList<E>) table[i];
+            _LinkedList<E> row = (_LinkedList<E>) table[i];
             int index = hash(row.get(0));
             temp[index] = row;
         }
@@ -55,7 +56,7 @@ public class _HashSet_P3<E> implements Iterable<E>{
         }
 
         int index = hash(data);
-        CopyOnWriteArrayList<E> row = (CopyOnWriteArrayList<E>) table[index];
+        _LinkedList<E> row = (_LinkedList<E>) table[index];
 
         if (row == null) {
             createNewRow(data, index);
@@ -71,14 +72,14 @@ public class _HashSet_P3<E> implements Iterable<E>{
     }
 
     private void createNewRow(E data, int index) {
-        CopyOnWriteArrayList<E> newRow = new CopyOnWriteArrayList<>();
+        _LinkedList<E> newRow = new _LinkedList<>();
         newRow.add(data);
         table[index] = newRow;
     }
 
     public boolean remove(E data){
         int index = hash(data);
-        CopyOnWriteArrayList<E> row = (CopyOnWriteArrayList<E>) table[index];
+        _LinkedList<E> row = (_LinkedList<E>) table[index];
 
         if(row == null){
             return false;
@@ -107,7 +108,7 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
         for(int i = 0; i < table.length; i++){
             if(table[i] == null) continue;
-            CopyOnWriteArrayList<E> row = (CopyOnWriteArrayList<E>) table[i];
+            _LinkedList<E> row = (_LinkedList<E>) table[i];
             for (E e : row) {
                 sb.append(e).append(", ");
             }
@@ -124,7 +125,7 @@ public class _HashSet_P3<E> implements Iterable<E>{
 
             private int cnt;
             private int pointer = -1;
-            private CopyOnWriteArrayList<E> row = new CopyOnWriteArrayList<>();
+            private _LinkedList<E> row = new _LinkedList<>();
             private Iterator<E> rowIterator = row.iterator();
 
             @Override
@@ -143,7 +144,7 @@ public class _HashSet_P3<E> implements Iterable<E>{
                     pointer++;
                 } while (table[pointer] == null);
 
-                row = (CopyOnWriteArrayList<E>) table[pointer];
+                row = (_LinkedList<E>) table[pointer];
                 rowIterator = row.iterator();
                 cnt++;
                 return rowIterator.next();

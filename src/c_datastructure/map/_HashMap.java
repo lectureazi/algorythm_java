@@ -3,7 +3,8 @@ package c_datastructure.map;
 import c_datastructure.list._LinkedList;
 import c_datastructure.set._HashSet_P3;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 @SuppressWarnings("unchecked")
 public class _HashMap<K, V> {
@@ -54,23 +55,84 @@ public class _HashMap<K, V> {
 
         if (row == null) {
             createNewRow(entry, index);
+            entrySet.add(entry);
             size++;
             return null;
         }
 
         if (row.contains(entry)) {
             Entry<K,V> res = row.remove(row.indexOf(entry));
+            entrySet.remove(entry);
             row.add(entry);
+            entrySet.add(entry);
             return res.getValue();
         }
 
         row.add(entry);
+        entrySet.add(entry);
         size++;
         return null;
     }
 
+    public V get(K key) {
+        int index = hash(key);
+        _LinkedList<Entry<K, V>> row = (_LinkedList<Entry<K, V>>) table[index];
+
+        if(row == null){
+            return null;
+        }
+
+        for (int i = 0; i < row.size(); i++) {
+            if(row.get(i).equals(new Entry<K,V>(key,null))){
+                return row.get(i).getValue();
+            }
+        }
+
+        return null;
+    }
+
+    public V remove(K key){
+        int index = hash(key);
+        _LinkedList<Entry<K, V>> row = (_LinkedList<Entry<K, V>>) table[index];
+
+        if(row == null){
+            return null;
+        }
+
+        for (int i = 0; i < row.size(); i++) {
+
+            Entry<K,V> dummy = new Entry<K,V>(key,null);
+
+            if(row.get(i).equals(dummy)){
+                V prev = row.remove(i).getValue();
+                entrySet.remove(dummy);
+                size--;
+
+                if(row.isEmpty()){
+                    table[index] = null;
+                }
+
+                return prev;
+            }
+        }
+
+        return null;
+    }
+
+    public _HashSet_P3<Entry<K,V>> entrySet(){
+        return entrySet;
+    }
+
+    public boolean containsKey(K key){
+        int index = hash(key);
+        if(table[index] == null) return false;
+
+        _LinkedList<Entry<K, V>> row = (_LinkedList<Entry<K, V>>) table[index];
+        return row.contains(new Entry<K,V>(key,null));
+    }
+
     private void createNewRow(Entry<K, V> data, int index) {
-        _LinkedList<Entry<K,V>> newRow = ( _LinkedList<Entry<K,V>>) table[index];
+        _LinkedList<Entry<K,V>> newRow = new _LinkedList<>();
         newRow.add(data);
         table[index] = newRow;
     }
@@ -78,7 +140,5 @@ public class _HashMap<K, V> {
     public int size() {
         return size;
     }
-
-
 }
 
