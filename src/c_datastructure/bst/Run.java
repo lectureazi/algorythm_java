@@ -1,5 +1,7 @@
 package c_datastructure.bst;
 
+import c_datastructure.list._LinkedList;
+
 public class Run {
 
     public static void main(String[] args) {
@@ -14,7 +16,6 @@ public class Run {
             System.out.println(bst.find(num));
         }
 
-        System.out.println(bst.find(99999));
-
+        bst.bfs();
     }
 }

@@ -3,7 +3,6 @@ package c_datastructure.stack;
 import c_datastructure.Node;
 
 import java.util.Iterator;
-import java.util.Stack;
 
 public class _Stack<E> implements Iterable<E> {
 
@@ -32,6 +31,10 @@ public class _Stack<E> implements Iterable<E> {
     public E peek() {
         if(top == null) return null;
         return top.data();
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
 

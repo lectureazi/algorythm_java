@@ -10,5 +10,9 @@ public class Run {
         for (int i = 0; i < 10; i++) {
             System.out.println( queue.dequeue());
         }
+
+        for (Integer i : queue) {
+            System.out.println(i);
+        }
     }
 }

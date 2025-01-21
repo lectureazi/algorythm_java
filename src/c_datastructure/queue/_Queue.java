@@ -3,12 +3,11 @@ package c_datastructure.queue;
 import c_datastructure.Node;
 
 import java.util.Iterator;
-import java.util.Queue;
 
-public class _Queue<E>  {
+public class _Queue<E> implements Iterable<E>{
 
     private Node<E> top;
-    private Node<E> cachNode;
+    private Node<E> cacheNode;
     private int size;
 
     public int size() {
@@ -19,11 +18,13 @@ public class _Queue<E>  {
         Node<E> newNode = new Node<>(e);
         if (top == null) {
             top = newNode;
-            cachNode = newNode;
+            cacheNode = newNode;
+            size++;
+            return;
         }
 
-        cachNode.next(newNode);
-        cachNode = newNode;
+        cacheNode.next(newNode);
+        cacheNode = newNode;
         size++;
     }
 
@@ -54,5 +55,25 @@ public class _Queue<E>  {
 
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+
+            Node<E> pointer = top;
+
+            @Override
+            public boolean hasNext() {
+                return pointer != null;
+            }
+
+            @Override
+            public E next() {
+                E res = pointer.data();
+                pointer = pointer.next();
+                return res;
+            }
+        };
     }
 }
